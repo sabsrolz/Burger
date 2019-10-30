@@ -24,7 +24,9 @@ module.exports = function(app) {
     orm.selectAll("burgers").then(function(data, err) {
       if (err) throw err;
       console.log(data);
-      res.json(data);
+      res.render("index", {
+        burger: data
+      });
     });
   });
 };
