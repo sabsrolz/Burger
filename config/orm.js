@@ -6,17 +6,18 @@ let orm = {
       if (err) throw err;
       console.log(result);
     });
+    return result;
   },
-  insertOne: function(tableName, colOne, colTwo, valueOne, valueTwo) {
-    queryString = `INSERT INTO ?? (??, ??) VALUES ("??", ??)`;
-    connection.query(
-      queryString,
-      [tableName, colOne, colTwo, valueOne, valueTwo],
-      function(err, result) {
-        if (err) throw err;
-        console.log(result);
-      }
-    );
+  insertOne: function(tableName, colOne, valueOne) {
+    queryString = `INSERT INTO ?? (??) VALUES ("??")`;
+    connection.query(queryString, [tableName, colOne, valueOne], function(
+      err,
+      result
+    ) {
+      if (err) throw err;
+      console.log(result);
+    });
+    return result;
   },
   updateOne: function(
     tableName,
@@ -34,6 +35,7 @@ let orm = {
         console.log(result);
       }
     );
+    return result;
   }
 };
 

@@ -16,6 +16,7 @@ app.set("view engine", "handlebars");
 app.use(express.static("./public"));
 
 //routes
+require("./controllers/burgers_controllerr")(app);
 
 app.listen(PORT, function() {
   // Log (server-side) when our server has started
