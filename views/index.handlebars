@@ -1,14 +1,62 @@
+<h1>Add a burger</h1>
+
 <ul>
-    {{#each burgers}}
+
+    {{#each burgers }}
     <li>
 
-        <p>Wish: {{this.burger}}</p>
+        <p>Burger: {{this.burger_name}}</p>
+
     </li>
     {{/each}}
 </ul>
 
-<form action="/" method="POST">
+<h2>Create a Burger</h2>
+<form id="createburger" class="button-size">
+    <input type="text" id="burger-name">
+    <button id="add-burger" type="submit">Save Burger!</button>
+</form>
+{{!-- 
+<h2>Update a burger</h2>
+<form id="updateburger" class="button-size">
+    <select name="id">
+        {{#each burgers}}
+        <option value="{{this.id}}">{{this.burger_name}}</option>
+        {{/each}}
+    </select>
+    <textarea type="text" name="burger"></textarea>
+    <button type="submit">Update Burger!</button>
+</form> --}}
+
+{{!-- <form action="/" method="POST">
     <textarea type="text" name="burger"></textarea>
 
     <button type="submit">Submit</button>
-</form>
+</form> --}}
+
+<script>
+    // when user clicks add-btn
+    $("#add-burger").on("click", function (event) {
+        event.preventDefault();
+
+        // make a newCharacter obj
+        var newBurger = {
+            // name from name input
+            name: $("#burger-name")
+                .val()
+                .trim()
+        };
+
+        // send an AJAX POST-request with jQuery
+        $.post("/api", newBurger)
+            // on success, run this callback
+            .then(function (data) {
+                // log the data we found
+                console.log(data);
+                location.reload();
+            });
+
+        // empty each input box by replacing the value with an empty string
+        //$("#burger-name").val("");
+    });
+</script>

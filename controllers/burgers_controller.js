@@ -1,7 +1,8 @@
 const orm = require("../config/orm");
 
+const express = require("express");
 //import burger model
-const burger = require("../models/burger");
+//const burger = require("../models/burger");
 
 const path = require("path");
 
@@ -12,48 +13,57 @@ module.exports = function(app) {
 
   //index route loads index.html
   app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    orm.selectAll("burgers", function(data, err) {
+      console.log("x", data);
+      console.log("y", err);
+      if (err) throw err;
+      res.render("index", {
+        burgers: data
+      });
+    });
+    //res.sendFile(path.join(__dirname, "../public/index.html"));
   });
-  app.get("/new", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/add.html"));
-  });
+  // app.get("/add", function(req, res) {
+  //   res.sendFile(path.join(__dirname, "../public/add.html"));
+  // });
 
   //Routes
   //view all burgers
-  app.get("api/burgers", function(req, res) {
-    orm.selectAll("burgers").then(function(data, err) {
+  app.get("api/", function(req, res) {
+    console.log("we hit this route");
+    orm.selectAll("burgers", function(data, err) {
       if (err) throw err;
       console.log(data);
-      res.render("index", {
-        burger: data
-      });
+      //res.json(data);
     });
   });
-};
 
-//add a new burger
-app.post("/api/new"),
-  function(req, res) {
+  //add a new burger
+  app.post("/api", function(req, res) {
     //burgers = orm.selectAll("burgers");
     //let burger = req.body;
-    orm
-      .insertOne("burgers", "burger_name", req.body.name)
-      .then(function(data, err) {
-        if (err) throw err;
-        console.log(data);
-        res.json(data);
-      });
-  };
-
-//update a burger
-app.put("/api/new", function(req, res) {
-  orm
-    .updateOne("burgers", "devoured", "1", "burger_name", req.body.name)
-    .then(function(data, err) {
+    orm.insertOne("burgers", "burger_name", req.body.name, function(data, err) {
       if (err) throw err;
       console.log(data);
       res.json(data);
     });
-});
+  });
+
+  //update a burger
+  app.put("/api", function(req, res) {
+    orm.updateOne(
+      "burgers",
+      "devoured",
+      "1",
+      "burger_name",
+      req.body.name,
+      function(data, err) {
+        if (err) throw err;
+        console.log(data);
+        res.json(data);
+      }
+    );
+  });
+};
 
 //`UPDATE ?? SET ?? = "??" WHERE ?? = "??"`
