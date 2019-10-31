@@ -25,7 +25,7 @@ let orm = {
     valueTarget,
     cb
   ) {
-    queryString = `UPDATE ?? SET ?? = "?" WHERE ?? = "?"`;
+    queryString = `UPDATE ?? SET ?? = ? WHERE ?? = ?`;
     connection.query(
       queryString,
       [tableName, colUpdate, valueUpdate, colTarget, valueTarget],

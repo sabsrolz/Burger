@@ -14,18 +14,14 @@ module.exports = function(app) {
   //index route loads index.html
   app.get("/", function(req, res) {
     orm.selectAll("burgers", function(data, err) {
-      console.log("x", data);
-      console.log("y", err);
+      // console.log("x", data);
+      // console.log("y", err);
       if (err) throw err;
       res.render("index", {
         burgers: data
       });
     });
-    //res.sendFile(path.join(__dirname, "../public/index.html"));
   });
-  // app.get("/add", function(req, res) {
-  //   res.sendFile(path.join(__dirname, "../public/add.html"));
-  // });
 
   //Routes
   //view all burgers
@@ -50,19 +46,15 @@ module.exports = function(app) {
   });
 
   //update a burger
-  app.put("/api", function(req, res) {
-    orm.updateOne(
-      "burgers",
-      "devoured",
-      "1",
-      "burger_name",
-      req.body.name,
-      function(data, err) {
-        if (err) throw err;
-        console.log(data);
-        res.json(data);
-      }
-    );
+  app.put("/api/burgers/:id", function(req, res) {
+    orm.updateOne("burgers", "devoured", "1", "id", req.params.id, function(
+      data,
+      err
+    ) {
+      if (err) throw err;
+      console.log(data);
+      res.json(data);
+    });
   });
 };
 

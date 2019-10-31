@@ -13,3 +13,5 @@ PRIMARY KEY (id)
 );
 
 SELECT * FROM burgers;
+
+DELETE FROM burgers;

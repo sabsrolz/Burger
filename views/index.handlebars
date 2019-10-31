@@ -1,23 +1,26 @@
-<h1>Add a burger</h1>
+<h3>Add a burger</h3>
 
 <ul>
 
     {{#each burgers }}
+
+
     <li>
 
-        <p>Burger: {{this.burger_name}}</p>
+        <p>Burger {{this.id}}: {{this.burger_name}} {{this.devoured}}
+            <button class="devour" class="btn-sm">Devour {{this.id}}</button></p>
 
     </li>
     {{/each}}
 </ul>
 
-<h2>Create a Burger</h2>
+<h3>Create a Burger</h3>
 <form id="createburger" class="button-size">
     <input type="text" id="burger-name">
     <button id="add-burger" type="submit">Save Burger!</button>
 </form>
-{{!-- 
-<h2>Update a burger</h2>
+
+{{!-- <h2>Update a burger</h2>
 <form id="updateburger" class="button-size">
     <select name="id">
         {{#each burgers}}
@@ -58,5 +61,27 @@
 
         // empty each input box by replacing the value with an empty string
         //$("#burger-name").val("");
+    });
+    $(".devour").on("click", function (event) {
+        //event.preventDefault();
+        let id = $(this).text().trim();
+        let updated_id = parseInt(id.slice(7, id.length));
+        //console.log(updated_id);
+
+        let updatedBurger = {
+            id: updated_id,
+            devoured: 1,
+        };
+        $.ajax("/api/burgers/" + updated_id, {
+            type: "PUT",
+            data: updatedBurger
+        }).then(
+            function () {
+                console.log("updated id ", id);
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+
     });
 </script>
