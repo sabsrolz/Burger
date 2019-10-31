@@ -2,13 +2,27 @@
 
 <ul>
 
-    {{#each burgers }}
+    {{#each burgers_0 }}
 
 
     <li>
 
-        <p>Burger {{this.id}}: {{this.burger_name}} {{this.devoured}}
+        <p>Burger {{this.id}}: {{this.burger_name}}
             <button class="devour" class="btn-sm">Devour {{this.id}}</button></p>
+
+    </li>
+    {{/each}}
+</ul>
+<h6>Devoured Burgers</h6>
+<ul>
+
+    {{#each burgers_1 }}
+
+
+    <li>
+
+        <p>Burger {{this.burger_name}}</p>
+
 
     </li>
     {{/each}}
