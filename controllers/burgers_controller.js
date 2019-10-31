@@ -6,19 +6,26 @@ const express = require("express");
 
 const path = require("path");
 
-let burgers = [];
+let burgers_available = [];
+let burgers_devoured = [];
 //HTML routing
 module.exports = function(app) {
   // Each of the below routes just handles the HTML page that the user gets sent to.
 
   //index route loads index.html
   app.get("/", function(req, res) {
+    burgers_available = [];
     orm.selectAll("burgers", function(data, err) {
-      // console.log("x", data);
-      // console.log("y", err);
+      //console.log(data);
       if (err) throw err;
+      for (let burger_row = 0; burger_row < data.length; burger_row++) {
+        if (data[burger_row].devoured == 0) {
+          burgers_available.push(data[burger_row]);
+        }
+      }
+      console.log(burgers_available);
       res.render("index", {
-        burgers: data
+        burgers: burgers_available
       });
     });
   });
