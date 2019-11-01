@@ -50,7 +50,7 @@ module.exports = function(app) {
   app.post("/api", function(req, res) {
     //burgers = orm.selectAll("burgers");
     //let burger = req.body;
-    burger.insertOne("burger_name", req.body.name, function(data, err) {
+    burger.insertOne(req.body.name, function(data, err) {
       if (err) throw err;
       console.log(data);
       res.json(data);
